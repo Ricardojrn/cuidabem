@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CuidaBem — Protótipo Front-end (Usuário Único)</title>
+  <meta name="description" content="Protótipo front-end do aplicativo CuidaBem — lembretes de medicação, agenda e informações para idosos. Autenticação local para usuário único." />
+  <link rel="stylesheet" href="cuidabem.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo" aria-hidden>CB</div>
+      <div>
+        <h1>CuidaBem — Protótipo Front-end</h1>
+        
+      </div>
+    </header>
+
+    <div id="authCard" class="card" role="region" aria-labelledby="authTitle">
+      <h2 id="authTitle">Acesso ao CuidaBem</h2>
+      <p class="muted">Esta demonstração usa autenticação local (apenas para protótipo). Crie um usuário ou entre para acessar seus lembretes personalizados.</p>
+
+      <div id="authForms">
+        <form id="loginForm" onsubmit="event.preventDefault();login();" style="margin-top:12px">
+          <label for="loginUser">Usuário</label>
+          <input id="loginUser" placeholder="Ex: jose.carlos" required />
+
+          <label for="loginPass" style="margin-top:8px">Senha</label>
+          <input id="loginPass" type="password" placeholder="senha (demo)" required />
+
+          <div style="display:flex;gap:10px;margin-top:12px">
+            <button class="btn">Entrar</button>
+            <button type="button" class="ghost" onclick="showRegister()">Criar conta</button>
+          </div>
+        </form>
+
+        <form id="regForm" onsubmit="event.preventDefault();register();" style="display:none;margin-top:12px">
+          <label for="regUser">Novo usuário</label>
+          <input id="regUser" placeholder="Nome de usuário" required />
+
+          <label for="regPass" style="margin-top:8px">Senha</label>
+          <input id="regPass" type="password" placeholder="senha (demo)" required />
+
+          <label for="regName" style="margin-top:8px">Nome completo</label>
+          <input id="regName" placeholder="Nome da pessoa" />
+
+          <div style="display:flex;gap:10px;margin-top:12px">
+            <button class="btn">Criar</button>
+            <button type="button" class="ghost" onclick="showLogin()">Voltar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div id="app" style="display:none">
+      <div class="grid" role="main">
+        <section>
+
+          <div class="card" style="margin-top:18px;" id="profileCard" aria-labelledby="profile-title">
+            <h2 id="profile-title">Perfil do Usuário</h2>
+            <p class="muted">Mantenha informações pessoais e contatos de emergência. Essas informações são armazenadas localmente apenas para a conta autenticada (demo).</p>
+
+            <form id="profileForm" onsubmit="event.preventDefault();saveProfile();" style="margin-top:12px">
+              <label for="pName">Nome</label>
+              <input id="pName" placeholder="Nome completo" />
+
+              <label for="pAge" style="margin-top:8px">Idade</label>
+              <input id="pAge" placeholder="Ex: 72" />
+
+              <label for="pConditions" style="margin-top:8px">Condições / Observações</label>
+              <textarea id="pConditions" placeholder="Ex: Hipertensão, Diabetes" rows="3"></textarea>
+
+              <label for="pCaregiver" style="margin-top:8px">Contato do cuidador / familiar</label>
+              <input id="pCaregiver" placeholder="Nome - telefone" />
+
+              <div style="display:flex;gap:10px;margin-top:12px">
+                <button class="btn">Salvar perfil</button>
+                <button type="button" class="ghost" onclick="resetProfileForm()">Limpar</button>
+              </div>
+            </form>
+
+            <div id="profileSummary" style="margin-top:12px;display:none">
+              <strong>Resumo do perfil</strong>
+              <div class="muted" id="profileSummaryText" style="margin-top:8px"></div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:18px;" id="scheduler" aria-labelledby="scheduler-title">
+            <h2 id="scheduler-title">Lembrete de Medicação</h2>
+            <p class="muted">Crie lembretes locais salvos apenas na conta autenticada (demo sem backend).</p>
+
+            <form id="remForm" onsubmit="event.preventDefault();addReminder();">
+              <label for="med">Nome do medicamento</label>
+              <input id="med" required placeholder="Ex: Losartan 50mg" />
+
+              <label for="time">Horário (hora:minuto)</label>
+              <input id="time" required placeholder="08:30" />
+
+              <div style="display:flex;gap:10px;margin-top:10px">
+                <button class="btn">Adicionar lembrete</button>
+                <button type="button" class="ghost" onclick="clearReminders()">Limpar</button>
+              </div>
+            </form>
+
+            <div class="reminder-list" id="remList" aria-live="polite" style="margin-top:12px"></div>
+          </div>
+
+          
+        </section>
+
+        <aside class="sticky">
+          <div class="card" id="quick" aria-labelledby="quick-title">
+            <h2 id="quick-title">Painel Rápido</h2>
+            <p class="muted">Acesso rápido às funções principais e métricas de usabilidade (demo).</p>
+
+            <div style="margin-top:8px;display:flex;align-items:center;gap:10px">
+              <div>
+                <strong id="profileName">Usuário</strong>
+                <div class="muted" id="profileUser">@usuario</div>
+              </div>
+              <div style="margin-left:auto">
+                <button class="ghost" onclick="logout()">Sair</button>
+              </div>
+            </div>
+
+            <div style="margin-top:12px">
+              <strong>Últimos lembretes</strong>
+              <div id="quickList" class="muted" style="margin-top:8px">Nenhum lembrete salvo.</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+
+    </div>
+  </div>
+
+  <script src="cuidabem.js"></script>
+</body>
+</html>
