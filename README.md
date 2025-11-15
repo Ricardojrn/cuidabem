@@ -30,7 +30,7 @@ O sistema oferece lembretes de medicação, reagendamento de consultas, pedidos 
 
 Frontend: HTML / CSS
 
-Backend: 
+Backend: C# / Javascript
 
 Banco de Dados: MySQL
 ***
